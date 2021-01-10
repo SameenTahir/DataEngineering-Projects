@@ -103,9 +103,9 @@ def process_log_data(spark, input_data, output_data):
     
     # extract columns to create time table
     time_table = df.select("start_time").dropDuplicates() \
-        .withColumn("hour", hour(col("start_time")).withColumn("day", day(col("start_time")) \
-        .withColumn("week", week(col("start_time")).withColumn("month", month(col("start_time")) \
-        .withColumn("year", year(col("start_time")).withColumn("weekday", date_format(col("start_time"), 'E'))
+        .withColumn("hour", hour(col("start_time"))).withColumn("day", day(col("start_time"))) \
+        .withColumn("week", week(col("start_time"))).withColumn("month", month(col("start_time"))) \
+        .withColumn("year", year(col("start_time"))).withColumn("weekday", date_format(col("start_time"), 'E'))
     
     # write time table to parquet files partitioned by year and month
     time_table.write.partitionBy("year", "month").parquet(output_data + 'time/')
